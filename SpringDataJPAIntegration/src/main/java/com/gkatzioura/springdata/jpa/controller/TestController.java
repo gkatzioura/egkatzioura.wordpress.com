@@ -23,4 +23,10 @@ public class TestController {
         return employeeRepository.findAll();
     }
 
+    @RequestMapping("/employee/filter")
+    public List<Employee> getFiltered(String firstName) {
+
+        return employeeRepository.getFirstNamesLike(firstName);
+    }
+
 }

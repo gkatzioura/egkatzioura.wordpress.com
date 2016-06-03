@@ -16,7 +16,7 @@ public class DataSourceConfig {
     public DataSource createDataSource() throws Exception {
 
         ComboPooledDataSource ds = new ComboPooledDataSource();
-        ds.setJdbcUrl("jdbc:postgresql://172.17.0.3:5432/postgres?&user=postgres&password=postgres");
+        ds.setJdbcUrl("jdbc:postgresql://172.17.0.2:5432/postgres?&user=postgres&password=postgres");
         ds.setDriverClass("org.postgresql.Driver");
 
         return ds;

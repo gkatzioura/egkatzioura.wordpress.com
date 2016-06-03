@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
  * Created by gkatzioura on 6/2/16.
  */
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee,Long>{
-
+public interface EmployeeRepository extends JpaRepository<Employee,Long>, EmployeeRepositoryCustom {
 }
