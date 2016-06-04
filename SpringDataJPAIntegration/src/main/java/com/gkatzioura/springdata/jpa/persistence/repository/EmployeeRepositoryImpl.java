@@ -26,9 +26,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepositoryCustom {
                 "and e.firstname LIKE ? " +
                 "and b.amount> ? ", Employee.class);
         query.setParameter(1, firstName + "%");
-        if(bonusAmount==null) {
-            bonusAmount = 0d;
-        }
         query.setParameter(2, bonusAmount);
 
         return query.getResultList();
