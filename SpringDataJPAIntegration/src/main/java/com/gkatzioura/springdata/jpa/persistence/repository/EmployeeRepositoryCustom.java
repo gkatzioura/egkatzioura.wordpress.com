@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface EmployeeRepositoryCustom {
 
-    List<Employee> getFirstNamesLike(String firstName);
+    List<Employee> getFirstNamesLikeAndBonusBigger(String firstName, Double bonusAmount);
 
 }

@@ -20,10 +20,16 @@ public class EmployeeRepositoryImpl implements EmployeeRepositoryCustom {
     EntityManager entityManager;
 
     @Override
-    public List<Employee> getFirstNamesLike(String firstName) {
-        Query query = entityManager.createNativeQuery("SELECT em.* FROM spring_data_jpa_example.employee as em " +
-                "WHERE em.firstname LIKE ?", Employee.class);
+    public List<Employee> getFirstNamesLikeAndBonusBigger(String firstName, Double bonusAmount) {
+        Query query = entityManager.createNativeQuery("select e.* from spring_data_jpa_example.bonus b, spring_data_jpa_example.employee e\n" +
+                "where e.id = b.employee_id " +
+                "and e.firstname LIKE ? " +
+                "and b.amount> ? ", Employee.class);
         query.setParameter(1, firstName + "%");
+        if(bonusAmount==null) {
+            bonusAmount = 0d;
+        }
+        query.setParameter(2, bonusAmount);
 
         return query.getResultList();
     }
