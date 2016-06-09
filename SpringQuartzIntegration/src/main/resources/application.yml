@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    initialize: true
+org:
+  quartz:
+    scheduler:
+      instanceName: spring-boot-quartz-demo
+      instanceId: AUTO
+    threadPool:
+      threadCount: 5
+job:
+  startDelay: 0
+  repeatInterval: 60000
+  description: Sample job
+  key: StatisticsJob
