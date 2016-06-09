@@ -1,6 +1,6 @@
 spring:
   datasource:
-    initialize: true
+    continueOnError: true
 org:
   quartz:
     scheduler:
