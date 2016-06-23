@@ -1,0 +1,8 @@
+{
+  "name": "Gkatziouras Emmanouil",
+  "email": "gkatzioura@gmail.com",
+  "url": "https://egkatzioura.wordpress.com",
+  "dependencies": {
+    "aws-sdk": "^2.4.1"
+  }
+}
