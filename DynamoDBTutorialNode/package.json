@@ -3,6 +3,7 @@
   "email": "gkatzioura@gmail.com",
   "url": "https://egkatzioura.wordpress.com",
   "dependencies": {
-    "aws-sdk": "^2.4.1"
+    "aws-sdk": "^2.4.1",
+    "mocha": "^2.5.3"
   }
 }

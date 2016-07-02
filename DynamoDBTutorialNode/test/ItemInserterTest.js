@@ -2,7 +2,7 @@
  * 
  */
 
-var ItemInserter = require("./ItemInserter");
+var ItemInserter = require("../ItemInserter");
 
 exports.testInsertUsers = function(test) {
 	

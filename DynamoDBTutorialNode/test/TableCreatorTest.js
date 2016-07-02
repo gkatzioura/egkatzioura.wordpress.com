@@ -2,7 +2,7 @@
  * http://usejsdoc.org/
  */
 
-var TableCreator = require("./TableCreator");
+var TableCreator = require("../TableCreator");
 
 exports.testCreateUsers = function(test) {
 	

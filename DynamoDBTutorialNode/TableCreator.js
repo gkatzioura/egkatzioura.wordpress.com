@@ -9,9 +9,10 @@ AWS.config.update({
 	  endpoint: "http://localhost:8000"
 });
 
+var dynamodb = new AWS.DynamoDB();
+
 var createUsers = function(callback) {
 
-	var dynamodb = new AWS.DynamoDB();
 
 	var params = {
 	    TableName : "Users",
@@ -30,9 +31,12 @@ var createUsers = function(callback) {
 	dynamodb.createTable(params, callback);	
 };
 
-var createLogins = function(callback) {
+var deleteUsers = function(callback) {
+	
+	dropTable("Users", callback)
+};
 
-	var dynamodb = new AWS.DynamoDB();
+var createLogins = function(callback) {
 
 	var params = {
 	    TableName : "Logins",
@@ -53,32 +57,13 @@ var createLogins = function(callback) {
 	dynamodb.createTable(params, callback);	
 };
 
-var createLogins = function(callback) {
-
-	var dynamodb = new AWS.DynamoDB();
-
-	var params = {
-	    TableName : "Logins",
-	    KeySchema: [       
-	        { AttributeName: "email", KeyType: "HASH"},
-	        { AttributeName: "timestamp", KeyType: "RANGE"}
-		],
-	    AttributeDefinitions: [       
-	        { AttributeName: "email", AttributeType: "S" },
-	        { AttributeName: "timestamp", AttributeType: "N" }
-	    ],
-	    ProvisionedThroughput: {       
-	        ReadCapacityUnits: 5, 
-	        WriteCapacityUnits: 5
-		   }
-		};
-
-	dynamodb.createTable(params, callback);	
+var deleteLogins = function(callback) {
+	
+	dropTable("Logins", callback)
 };
+
 
 var createSupervisors = function(callback) {
-
-	var dynamodb = new AWS.DynamoDB();
 
 	var params = {
 	    TableName : "Supervisors",
@@ -119,10 +104,13 @@ var createSupervisors = function(callback) {
 	dynamodb.createTable(params, callback);	
 };
 
+var deleteSupervisors = function(callback) {
+	
+	dropTable("Supervisors", callback)
+};
+
 
 var createCompanies = function(callback) {
-
-	var dynamodb = new AWS.DynamoDB();
 
 	var params = {
 	    TableName : "Companies",
@@ -160,10 +148,23 @@ var createCompanies = function(callback) {
 	dynamodb.createTable(params, callback);	
 };
 
+var deleteCompanies = function(callback) {
+	
+	dropTable("Companies", callback)
+};
+
+var dropTable = function(name,callback) {
+
+	dynamodb.deleteTable({TableName:name},callback);
+}
 
 module.exports = {
 	createUsers: createUsers,
 	createLogins: createLogins,
 	createSupervisors: createSupervisors,
-	createCompanies: createCompanies
+	createCompanies: createCompanies,
+	deleteUsers:deleteUsers,
+	deleteLogins:deleteLogins,
+	deleteSupervisors:deleteSupervisors,
+	deleteCompanies:deleteCompanies
 }
