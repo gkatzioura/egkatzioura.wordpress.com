@@ -2,6 +2,7 @@ package com.gkatzioura.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -9,33 +10,32 @@ import org.junit.Test;
  */
 public class ItemInserterTest {
 
+    private AmazonDynamoDB amazonDynamoDB;
+    private ItemInserter itemInserter;
+
+    @Before
+    public void setUp() {
+        AmazonDynamoDB amazonDynamoDB = new AmazonDynamoDBClient();
+        amazonDynamoDB.setEndpoint("http://localhost:8000");
+        this.amazonDynamoDB = amazonDynamoDB;
+        this.itemInserter = new ItemInserter(amazonDynamoDB);
+    }
+
     @Test
     public void insertToTables() {
 
-        AmazonDynamoDB amazonDynamoDB = new AmazonDynamoDBClient();
-        amazonDynamoDB.setEndpoint("http://localhost:8000");
-
-        ItemInserter itemInserter = new ItemInserter(amazonDynamoDB);
         itemInserter.insertUsers();
     }
 
     @Test
     public void batchInsert() {
 
-        AmazonDynamoDB amazonDynamoDB = new AmazonDynamoDBClient();
-        amazonDynamoDB.setEndpoint("http://localhost:8000");
-
-        ItemInserter itemInserter = new ItemInserter(amazonDynamoDB);
         itemInserter.insetBatchLogins();
     }
 
     @Test
     public void insertSupervisor() {
 
-        AmazonDynamoDB amazonDynamoDB = new AmazonDynamoDBClient();
-        amazonDynamoDB.setEndpoint("http://localhost:8000");
-
-        ItemInserter itemInserter = new ItemInserter(amazonDynamoDB);
         itemInserter.insertSupervisor();
     }
 }

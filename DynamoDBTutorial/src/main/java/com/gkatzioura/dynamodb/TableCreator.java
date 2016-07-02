@@ -42,7 +42,11 @@ public class TableCreator {
         amazonDynamoDB.createTable(createTableRequest);
     }
 
-    public void createLoginTable() {
+    public void deleteUsersTable() {
+        deleteTable("Users");
+    }
+
+    public void createLoginsTable() {
 
         List<KeySchemaElement> elements = new ArrayList<KeySchemaElement>();
         KeySchemaElement hashKey = new KeySchemaElement()
@@ -76,6 +80,10 @@ public class TableCreator {
 
 
         amazonDynamoDB.createTable(createTableRequest);
+    }
+
+    public void deleteLoginsTable() {
+        deleteTable("Logins");
     }
 
     public void createSupervisor() {
@@ -131,6 +139,10 @@ public class TableCreator {
         amazonDynamoDB.createTable(createTableRequest);
     }
 
+    public void deleteSupervisorsTable() {
+        deleteTable("Supervisors");
+    }
+
     public void createCompany() {
 
         List<KeySchemaElement> elements = new ArrayList<>();
@@ -183,6 +195,16 @@ public class TableCreator {
                 .withAttributeDefinitions(attributeDefinitions);
 
         amazonDynamoDB.createTable(createTableRequest);
+    }
+    public void deleteCompaniesTable() {
+        deleteTable("Companies");
+    }
+
+    private void deleteTable(String tableName) {
+
+        DeleteTableRequest deleteTableRequest = new DeleteTableRequest();
+        deleteTableRequest.setTableName(tableName);
+        amazonDynamoDB.deleteTable(deleteTableRequest);
     }
 
 }

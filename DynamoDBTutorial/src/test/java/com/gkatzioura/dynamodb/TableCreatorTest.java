@@ -16,7 +16,7 @@ public class TableCreatorTest {
         amazonDynamoDB.setEndpoint("http://localhost:8000");
 
         TableCreator tableCreator = new TableCreator(amazonDynamoDB);
-        tableCreator.createLoginTable();
+        tableCreator.createLoginsTable();
         tableCreator.createSupervisor();
         tableCreator.createUserTable();
         tableCreator.createCompany();
