@@ -31,6 +31,58 @@ public class LoginRepository {
         PutItemResult putItemResult = amazonDynamoDB.putItem(putItemRequest);
     }
 
+    public Integer countLogins(String email) {
+        List<Map<String,AttributeValue>> items = new ArrayList<>();
+
+        Map<String,String> expressionAttributesNames = new HashMap<>();
+        expressionAttributesNames.put("#email","email");
+
+        Map<String,AttributeValue> expressionAttributeValues = new HashMap<>();
+        expressionAttributeValues.put(":emailValue",new AttributeValue().withS(email));
+
+        QueryRequest queryRequest = new QueryRequest()
+                .withTableName(TABLE_NAME)
+                .withKeyConditionExpression("#email = :emailValue")
+                .withExpressionAttributeNames(expressionAttributesNames)
+                .withExpressionAttributeValues(expressionAttributeValues)
+                .withSelect(Select.COUNT);
+
+        Map<String,AttributeValue> lastKey = null;
+        QueryResult queryResult = amazonDynamoDB.query(queryRequest);
+        List<Map<String,AttributeValue>> results = queryResult.getItems();
+        return queryResult.getCount();
+    }
+
+    public List<Map<String,AttributeValue>> fetchLoginsDesc(String email) {
+
+        List<Map<String,AttributeValue>> items = new ArrayList<>();
+
+        Map<String,String> expressionAttributesNames = new HashMap<>();
+        expressionAttributesNames.put("#email","email");
+
+        Map<String,AttributeValue> expressionAttributeValues = new HashMap<>();
+        expressionAttributeValues.put(":emailValue",new AttributeValue().withS(email));
+
+        QueryRequest queryRequest = new QueryRequest()
+                .withTableName(TABLE_NAME)
+                .withKeyConditionExpression("#email = :emailValue")
+                .withExpressionAttributeNames(expressionAttributesNames)
+                .withExpressionAttributeValues(expressionAttributeValues)
+                .withScanIndexForward(false);
+
+        Map<String,AttributeValue> lastKey = null;
+
+        do {
+
+            QueryResult queryResult = amazonDynamoDB.query(queryRequest);
+            List<Map<String,AttributeValue>> results = queryResult.getItems();
+            items.addAll(results);
+            lastKey = queryResult.getLastEvaluatedKey();
+        } while (lastKey!=null);
+
+        return items;
+    }
+
     public List<Map<String ,AttributeValue>> queryLoginsBetween(String email, Date from, Date to) {
 
         List<Map<String,AttributeValue>> items = new ArrayList<>();

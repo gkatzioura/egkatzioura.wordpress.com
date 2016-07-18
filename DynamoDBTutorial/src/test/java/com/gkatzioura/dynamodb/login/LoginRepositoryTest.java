@@ -49,5 +49,31 @@ public class LoginRepositoryTest {
         Assert.assertEquals(50,items.size());
     }
 
+    @Test
+    public void testGetLogins() {
+
+        for(int i=0;i<100 ;i++) {
+
+            ZonedDateTime zonedDateTime = ZonedDateTime.now().minusDays(i);
+            loginRepository.insertLogin("me@test.com",Date.from(zonedDateTime.toInstant()));
+        }
+
+        List<Map<String,AttributeValue>> items = loginRepository.fetchLoginsDesc("me@test.com");
+
+        Assert.assertEquals(100,items.size());
+    }
+
+    @Test
+    public void testCountLogins() {
+        for(int i=0;i<100 ;i++) {
+
+            ZonedDateTime zonedDateTime = ZonedDateTime.now().minusDays(i);
+            loginRepository.insertLogin("me@test.com",Date.from(zonedDateTime.toInstant()));
+        }
+
+        Integer totalItems = loginRepository.countLogins("me@test.com");
+
+        Assert.assertEquals(100L,totalItems.longValue());
+    }
 
 }
