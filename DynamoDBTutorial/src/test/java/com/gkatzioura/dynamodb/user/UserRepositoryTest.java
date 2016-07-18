@@ -39,4 +39,13 @@ public class UserRepositoryTest {
         Assert.assertEquals(user.get("fullname").getS(),"Mr mean");
     }
 
+    @Test
+    public void testGetRegisterDate() {
+
+        userRepository.insertUser("me@test.com","Mr mean",new Date());
+        Map<String,AttributeValue> user = userRepository.getRegisterDate("me@test.com");
+
+        System.out.println("d");
+    }
+
 }

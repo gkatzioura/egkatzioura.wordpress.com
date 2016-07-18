@@ -61,4 +61,30 @@ public class UserRepository {
         }
     }
 
+    public Map<String,AttributeValue> getRegisterDate(String email) {
+
+        Map<String,String> expressionAttributesNames = new HashMap<>();
+        expressionAttributesNames.put("#email","email");
+
+        Map<String,AttributeValue> expressionAttributeValues = new HashMap<>();
+        expressionAttributeValues.put(":emailValue",new AttributeValue().withS(email));
+
+        QueryRequest queryRequest = new QueryRequest()
+                .withTableName(TABLE_NAME)
+                .withKeyConditionExpression("#email = :emailValue")
+                .withExpressionAttributeNames(expressionAttributesNames)
+                .withExpressionAttributeValues(expressionAttributeValues)
+                .withProjectionExpression("registerDate");
+
+        QueryResult queryResult = amazonDynamoDB.query(queryRequest);
+
+        List<Map<String,AttributeValue>> attributeValues = queryResult.getItems();
+
+        if(attributeValues.size()>0) {
+            return attributeValues.get(0);
+        } else {
+            return null;
+        }
+    }
+
 }
