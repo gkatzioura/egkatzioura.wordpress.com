@@ -1,0 +1,23 @@
+<hazelcast
+        xsi:schemaLocation="https://hazelcast.com/schema/config https://hazelcast.com/schema/config/hazelcast-config-3.7.xsd"
+        xmlns="http://www.hazelcast.com/schema/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <group>
+        <name>ec2-group</name>
+        <password>ec2-password</password>
+    </group>
+    <network>
+        <join>
+            <multicast enabled="false">
+            </multicast>
+            <tcp-ip enabled="false">
+            </tcp-ip>
+            <aws enabled="true">
+                <!--optional, default is us-east-1 -->
+                <region>eu-west-1</region>
+                <iam-role>my-ec2-role</iam-role>
+                <tag-key></tag-key>
+                <tag-value></tag-value>
+            </aws>
+        </join>
+    </network>
+</hazelcast>
