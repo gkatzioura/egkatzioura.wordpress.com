@@ -78,6 +78,7 @@ public class LoginRepository {
             List<Map<String,AttributeValue>> results = queryResult.getItems();
             items.addAll(results);
             lastKey = queryResult.getLastEvaluatedKey();
+            queryRequest.withExclusiveStartKey(lastKey);
         } while (lastKey!=null);
 
         return items;
@@ -110,9 +111,42 @@ public class LoginRepository {
             List<Map<String,AttributeValue>> results = queryResult.getItems();
             items.addAll(results);
             lastKey = queryResult.getLastEvaluatedKey();
+            queryRequest.setExclusiveStartKey(lastKey);
         } while (lastKey!=null);
 
         return items;
+    }
+
+    public List<String> scanLogins(Date date) {
+
+        List<String> emails = new ArrayList<>();
+
+
+        Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
+        attributeValues.put(":val1", new AttributeValue().withN(Long.toString(date.getTime())));
+        attributeValues.put(":val2", new AttributeValue().withS(Long.toString(date.getTime())));
+
+
+        ScanRequest scanRequest = new ScanRequest()
+                .withTableName(TABLE_NAME)
+                .withFilterExpression("from < :from and to < :to")
+                .withExpressionAttributeValues(attributeValues)
+                .withSelect("email");
+
+
+        Map<String,AttributeValue> lastKey = null;
+
+        do {
+
+            ScanResult scanResult = amazonDynamoDB.scan(scanRequest);
+
+            List<Map<String,AttributeValue>> results = scanResult.getItems();
+            lastKey = scanResult.getLastEvaluatedKey();
+            scanRequest.setExclusiveStartKey(lastKey);
+        } while (lastKey!=null);
+
+
+        return emails;
     }
 
 }
