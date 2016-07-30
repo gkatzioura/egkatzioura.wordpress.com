@@ -122,17 +122,20 @@ public class LoginRepository {
         List<String> emails = new ArrayList<>();
 
 
+        Map<String, String> attributeNames = new HashMap<String, String >();
+        attributeNames.put("#timestamp", "timestamp");
+
+
         Map<String, AttributeValue> attributeValues = new HashMap<String, AttributeValue>();
-        attributeValues.put(":val1", new AttributeValue().withN(Long.toString(date.getTime())));
-        attributeValues.put(":val2", new AttributeValue().withS(Long.toString(date.getTime())));
+        attributeValues.put(":from", new AttributeValue().withN(Long.toString(date.getTime())));
 
 
         ScanRequest scanRequest = new ScanRequest()
                 .withTableName(TABLE_NAME)
-                .withFilterExpression("from < :from and to < :to")
+                .withFilterExpression("#timestamp < :from")
+                .withExpressionAttributeNames(attributeNames)
                 .withExpressionAttributeValues(attributeValues)
-                .withSelect("email");
-
+                .withProjectionExpression("email");
 
         Map<String,AttributeValue> lastKey = null;
 
@@ -141,10 +144,10 @@ public class LoginRepository {
             ScanResult scanResult = amazonDynamoDB.scan(scanRequest);
 
             List<Map<String,AttributeValue>> results = scanResult.getItems();
+            results.forEach(r->emails.add(r.get("email").getS()));
             lastKey = scanResult.getLastEvaluatedKey();
             scanRequest.setExclusiveStartKey(lastKey);
         } while (lastKey!=null);
-
 
         return emails;
     }

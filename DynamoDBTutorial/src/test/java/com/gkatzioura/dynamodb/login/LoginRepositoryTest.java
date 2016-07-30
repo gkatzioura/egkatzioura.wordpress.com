@@ -76,4 +76,23 @@ public class LoginRepositoryTest {
         Assert.assertEquals(100L,totalItems.longValue());
     }
 
+    @Test
+    public void testScanLogins() {
+
+        ZonedDateTime middleDate = null;
+
+        for(int i=0;i<100 ;i++) {
+
+            ZonedDateTime zonedDateTime = ZonedDateTime.now().minusDays(i);
+            loginRepository.insertLogin(i+"me@test.com",Date.from(zonedDateTime.toInstant()));
+            if(i==50) {
+                middleDate = zonedDateTime;
+            }
+        }
+
+        List<String> emails = loginRepository.scanLogins(Date.from(middleDate.toInstant()));
+
+        Assert.assertEquals(49,emails.size());
+   }
+
 }
