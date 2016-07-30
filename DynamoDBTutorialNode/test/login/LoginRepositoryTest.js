@@ -4,7 +4,8 @@
 
 var LoginRepository = require('../../login/LoginRepository'),
 	TableCreator = require('../../TableCreator'),
-	assert = require('assert');
+	assert = require('assert'),
+	async = require('async');
 
 describe('LoginRepository Repository Test',function(){
     
@@ -52,6 +53,56 @@ describe('LoginRepository Repository Test',function(){
 			}
 		});
 	});
+
+	it('Count logins',function(done) {
 	
+		LoginRepository.countLogins("john@doe.com",function(err,result) {
+			if(err) {
+				done(err);
+			} else {
+				assert.equal(result.Count, 1);
+				done();
+			}
+		});
+	});
+	
+	it('Fetch Logins Descending',function(done) {
+
+		var dateOne = new Date();
+		dateOne.setDate(dateOne.getDate()-1);
+		var dateTwo = new Date(); 	
+		dateTwo.setDate(dateTwo.getDate()+1);
+		
+		async.map([dateOne,dateTwo],
+				function(date,callback) {
+					LoginRepository.insertLogin("john@doe.com", date, callback);
+				},
+				function(err,result){
+					LoginRepository.fetchLoginsDesc("john@doe.com", function(err,result) {
+						assert.equal(result.Items[2].timestamp,dateOne.getTime());
+						assert.equal(result.Items[0].timestamp,dateTwo.getTime());
+						done(err,result);
+					});
+				});
+	});
+	
+	it('Scan Logins',function(done) {
+
+		var dateOne = new Date();
+		dateOne.setDate(dateOne.getDate()-1);
+		var dateTwo = new Date(); 	
+		dateTwo.setDate(dateTwo.getDate()+1);
+		
+		async.map([dateOne,dateTwo],
+				function(date,callback) {
+					LoginRepository.insertLogin("john@doe.com", date, callback);
+				},
+				function(err,result){
+					LoginRepository.scanLogins(dateOne, function(err,result) {
+						assert.equal(result.length,1);
+						done(err,result);
+					});
+				});
+	});
 })
 

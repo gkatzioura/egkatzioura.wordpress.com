@@ -24,6 +24,45 @@ var insertLogin = function(email,date,callback) {
 	dynamodb.putItem(params,callback);
 }
 
+var countLogins = function(email,callback) {
+
+	var docClient = new AWS.DynamoDB.DocumentClient();
+
+	var params = {
+	    TableName:"Logins",
+	    KeyConditionExpression:"#email = :emailValue",
+	    ExpressionAttributeNames: {
+	    	"#email":"email"
+	    },
+	    ExpressionAttributeValues: {
+	    	":emailValue":email
+	    },
+	    Select:'COUNT'
+	};
+	
+	docClient.query(params,callback);
+}
+
+var fetchLoginsDesc = function(email,callback) {
+
+	var docClient = new AWS.DynamoDB.DocumentClient();
+
+	var params = {
+	    TableName:"Logins",
+	    KeyConditionExpression:"#email = :emailValue",
+	    ExpressionAttributeNames: {
+	    	"#email":"email"
+	    },
+	    ExpressionAttributeValues: {
+	    	":emailValue":email
+	    },
+	    ScanIndexForward: false
+	};
+	
+	docClient.query(params,callback);
+}
+
+
 var queryLogins = function(email,from,to,callback) {
 
 	var docClient = new AWS.DynamoDB.DocumentClient();
@@ -52,8 +91,6 @@ var queryLogins = function(email,from,to,callback) {
 				callback(err);
 			} else {
 			
-				console.log(result)
-				
 				items = items.concat(result.Items);
 			
 				if(result.LastEvaluatedKey) {
@@ -70,7 +107,53 @@ var queryLogins = function(email,from,to,callback) {
 	queryExecute(callback);
 };
 
+var scanLogins = function(date,callback) {
+
+	var docClient = new AWS.DynamoDB.DocumentClient();
+
+	var params = {
+		TableName:"Logins",
+		ProjectionExpression: "email",
+	    FilterExpression: "#timestamp < :from",
+	    ExpressionAttributeNames: {
+	        "#timestamp": "timestamp",
+	    },
+	    ExpressionAttributeValues: {
+	         ":from": date.getTime()
+	    }
+	};
+
+	var items = []
+	
+	var scanExecute = function(callback) {
+	
+		docClient.scan(params,function(err,result) {
+
+			if(err) {
+				callback(err);
+			} else {
+				
+				items = items.concat(result.Items);
+
+				if(result.LastEvaluatedKey) {
+
+					params.ExclusiveStartKey = result.LastEvaluatedKey;
+					scanExecute(callback);				
+				} else {
+					callback(err,items);
+				}	
+			}
+		});
+	}
+	
+	scanExecute(callback);
+};
+
+
 module.exports = {
 	queryLogins:queryLogins,
-	insertLogin:insertLogin
+	insertLogin:insertLogin,
+	countLogins:countLogins,
+	fetchLoginsDesc: fetchLoginsDesc,
+	scanLogins: scanLogins
 }
