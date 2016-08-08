@@ -91,4 +91,24 @@ public class UserRepositoryTest {
         Assert.assertNotEquals(user.get("fullname").getS(),updatedUser.get("fullname").getS());
     }
 
+    @Test
+    public void createAtomicCounter() {
+
+        userRepository.insertUser("me@test.com","Mr mean",new Date());
+
+        Map<String,AttributeValue> user = userRepository.getUser("me@test.com");
+
+        userRepository.addUpdateCounter("me@test.com");
+
+        Map<String,AttributeValue> userWithCounter = userRepository.getUser("me@test.com");
+
+        userRepository.updateAndIncreaseCounter("me@test.com","John doe");
+
+        Map<String,AttributeValue> counterIncreased = userRepository.getUser("me@test.com");
+
+        Assert.assertEquals(userWithCounter.get("counter").getN(),"0");
+        Assert.assertEquals(counterIncreased.get("counter").getN(),"1");
+
+    }
+
 }

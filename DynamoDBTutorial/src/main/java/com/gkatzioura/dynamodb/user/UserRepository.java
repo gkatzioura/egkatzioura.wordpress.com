@@ -83,6 +83,33 @@ public class UserRepository {
         UpdateItemResult updateItemResult = amazonDynamoDB.updateItem(updateItemRequest);
     }
 
+    public void addUpdateCounter(String email) {
+
+        Map<String,AttributeValue> key = new HashMap<>();
+        key.put("email",new AttributeValue().withS(email));
+
+        UpdateItemRequest updateItemRequest = new UpdateItemRequest()
+                .withTableName(TABLE_NAME)
+                .withKey(key)
+                .addAttributeUpdatesEntry("counter",new AttributeValueUpdate().withValue(new AttributeValue().withN("0")).withAction(AttributeAction.PUT));
+
+        UpdateItemResult updateItemResult = amazonDynamoDB.updateItem(updateItemRequest);
+    }
+
+    public void updateAndIncreaseCounter(String email,String fullname) {
+
+        Map<String,AttributeValue> key = new HashMap<>();
+        key.put("email",new AttributeValue().withS(email));
+
+        UpdateItemRequest updateItemRequest = new UpdateItemRequest()
+                .withTableName(TABLE_NAME)
+                .withKey(key)
+                .addAttributeUpdatesEntry("fullname",new AttributeValueUpdate().withValue(new AttributeValue().withS(fullname)).withAction(AttributeAction.PUT))
+                .addAttributeUpdatesEntry("counter",new AttributeValueUpdate().withValue(new AttributeValue().withN("1")).withAction(AttributeAction.ADD));
+
+        UpdateItemResult updateItemResult = amazonDynamoDB.updateItem(updateItemRequest);
+    }
+
     public Map<String,AttributeValue> getUser(String email) {
 
         Map<String,String> expressionAttributesNames = new HashMap<>();
@@ -133,5 +160,6 @@ public class UserRepository {
             return null;
         }
     }
+
 
 }
