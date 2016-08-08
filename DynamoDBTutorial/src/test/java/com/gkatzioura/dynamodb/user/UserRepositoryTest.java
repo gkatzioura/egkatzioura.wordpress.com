@@ -3,6 +3,7 @@ package com.gkatzioura.dynamodb.user;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.gkatzioura.dynamodb.TableCreator;
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,6 +47,48 @@ public class UserRepositoryTest {
         Map<String,AttributeValue> user = userRepository.getRegisterDate("me@test.com");
 
         System.out.println("d");
+    }
+
+    @Test
+    public void updateUser() {
+
+        userRepository.insertUser("me@test.com","Mr mean",new Date());
+
+        Map<String,AttributeValue> user = userRepository.getUser("me@test.com");
+
+        userRepository.updateName("me@test.com","John Doe");
+
+        Map<String,AttributeValue> updatedUser = userRepository.getUser("me@test.com");
+
+        Assert.assertNotEquals(user.get("fullname").getS(),updatedUser.get("fullname").getS());
+    }
+
+    @Test
+    public void updateUserConditionally() throws ConditionalCheckFailedException {
+
+        userRepository.insertUser("me@test.com","Mr mean",new Date());
+
+        Map<String,AttributeValue> user = userRepository.getUser("me@test.com");
+
+        userRepository.updateConditionallyWithExpression("me@test.com","John Doe","Mr");
+
+        Map<String,AttributeValue> updatedUser = userRepository.getUser("me@test.com");
+
+        Assert.assertNotEquals(user.get("fullname").getS(),updatedUser.get("fullname").getS());
+    }
+
+    @Test
+    public void testUpdateConditionallyWithAttributeEntries() throws ConditionalCheckFailedException {
+
+        userRepository.insertUser("me@test.com","Mr mean",new Date());
+
+        Map<String,AttributeValue> user = userRepository.getUser("me@test.com");
+
+        userRepository.updateConditionallyWithAttributeEntries("me@test.com","John Doe","Mar");
+
+        Map<String,AttributeValue> updatedUser = userRepository.getUser("me@test.com");
+
+        Assert.assertNotEquals(user.get("fullname").getS(),updatedUser.get("fullname").getS());
     }
 
 }
