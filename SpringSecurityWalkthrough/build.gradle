@@ -1,0 +1,33 @@
+group 'com.gkatzioura'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.thymeleaf:thymeleaf-spring4")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework:spring-jdbc")
+    compile("com.h2database:h2:1.4.192")
+    compile("org.slf4j:slf4j-api:1.6.6")
+    compile("ch.qos.logback:logback-core:1.1.7")
+    compile("ch.qos.logback:logback-classic:1.1.7")
+    testCompile "junit:junit:4.11"
+}
