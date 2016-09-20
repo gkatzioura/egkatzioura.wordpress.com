@@ -33,5 +33,5 @@ dependencies {
 }
 
 bootRun {
-    systemProperty "spring.profiles.active", "simple"
+    systemProperty "spring.profiles.active", "customquery"
 }
