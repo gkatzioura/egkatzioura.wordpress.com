@@ -3,6 +3,7 @@ package com.gkatzioura.spring.security.config;
 import org.h2.jdbcx.JdbcDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import javax.sql.DataSource;
 import java.nio.file.Files;
@@ -14,6 +15,7 @@ import java.nio.file.Files;
 public class DataSourceConfig {
 
     @Bean
+    @Profile(value = {"simple","customquery"})
     public DataSource createDataSource() {
 
         JdbcDataSource dataSource = new JdbcDataSource();

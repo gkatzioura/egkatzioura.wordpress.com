@@ -31,3 +31,7 @@ dependencies {
     compile("ch.qos.logback:logback-classic:1.1.7")
     testCompile "junit:junit:4.11"
 }
+
+bootRun {
+    systemProperty "spring.profiles.active", "simple"
+}
