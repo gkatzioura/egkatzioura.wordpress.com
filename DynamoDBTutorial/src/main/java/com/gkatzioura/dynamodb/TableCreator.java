@@ -2,6 +2,8 @@ package com.gkatzioura.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.List;
 public class TableCreator {
 
     private AmazonDynamoDB amazonDynamoDB;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TableCreator.class);
 
     public TableCreator(AmazonDynamoDB amazonDynamoDB) {
         this.amazonDynamoDB = amazonDynamoDB;
@@ -202,9 +206,13 @@ public class TableCreator {
 
     private void deleteTable(String tableName) {
 
-        DeleteTableRequest deleteTableRequest = new DeleteTableRequest();
-        deleteTableRequest.setTableName(tableName);
-        amazonDynamoDB.deleteTable(deleteTableRequest);
+        try {
+            DeleteTableRequest deleteTableRequest = new DeleteTableRequest();
+            deleteTableRequest.setTableName(tableName);
+            amazonDynamoDB.deleteTable(deleteTableRequest);
+        } catch (Exception e) {
+            LOGGER.error("Table does not exist");
+        }
     }
 
 }
