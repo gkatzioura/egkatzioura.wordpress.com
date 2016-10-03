@@ -73,4 +73,49 @@ public class LoginMapperRepositoryTest {
         Assert.assertEquals(logins.size(),15);
     }
 
+    @Test
+    public void testScanLogins() {
+
+        ZonedDateTime zonedDateTime = ZonedDateTime.now();
+
+        ZonedDateTime initial = zonedDateTime.minus(30, ChronoUnit.DAYS);
+
+        for (int i=0;i<30;i++) {
+
+            ZonedDateTime tempData = initial.plus(i,ChronoUnit.DAYS);
+
+            Login login = new Login();
+            login.setEmail(EMAIL);
+            login.setTimestamp(tempData.toInstant().getEpochSecond());
+            loginRepository.insertLogin(login);
+        }
+
+        List<Login> logins = loginRepository.scanLogins(initial.plus(15,ChronoUnit.DAYS).toEpochSecond());
+
+        Assert.assertEquals(logins.size(),15);
+    }
+
+    @Test
+    public void testParallelScanLogins() {
+
+        ZonedDateTime zonedDateTime = ZonedDateTime.now();
+
+        ZonedDateTime initial = zonedDateTime.minus(30, ChronoUnit.DAYS);
+
+        for (int i=0;i<30;i++) {
+
+            ZonedDateTime tempData = initial.plus(i,ChronoUnit.DAYS);
+
+            Login login = new Login();
+            login.setEmail(EMAIL);
+            login.setTimestamp(tempData.toInstant().getEpochSecond());
+            loginRepository.insertLogin(login);
+        }
+
+        List<Login> logins = loginRepository.scanLogins(initial.plus(15,ChronoUnit.DAYS).toEpochSecond(),4);
+
+        Assert.assertEquals(logins.size(),15);
+    }
+
+
 }
