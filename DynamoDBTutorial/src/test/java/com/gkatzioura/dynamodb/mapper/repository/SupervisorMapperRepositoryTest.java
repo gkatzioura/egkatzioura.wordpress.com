@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.gkatzioura.dynamodb.TableCreator;
 import com.gkatzioura.dynamodb.mapper.entities.Supervisor;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,5 +39,20 @@ public class SupervisorMapperRepositoryTest {
 
         supervisorMapperRepository.insertSupervisor(supervisor);
     }
+
+    @Test
+    public void testGetSupervisor() {
+
+        Supervisor supervisor = new Supervisor();
+        supervisor.setCompany("Sun");
+        supervisor.setFactory("Athens");
+        supervisor.setName("John Doe");
+        supervisorMapperRepository.insertSupervisor(supervisor);
+
+        Supervisor fetchSupervisor = supervisorMapperRepository.getSupervisor("Sun","Athens");
+
+        Assert.assertEquals("John Doe",fetchSupervisor.getName());
+    }
+
 
 }

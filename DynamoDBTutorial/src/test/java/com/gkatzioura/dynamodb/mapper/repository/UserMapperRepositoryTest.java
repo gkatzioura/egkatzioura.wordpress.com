@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.gkatzioura.dynamodb.TableCreator;
 import com.gkatzioura.dynamodb.mapper.entities.User;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -79,5 +80,22 @@ public class UserMapperRepositoryTest {
 
         userMapperRepository.delete(users);
     }
+
+    @Test
+    public void testGetUser() {
+
+        final String email = "me@test.com";
+
+        User user = new User();
+        user.setEmail(email);
+        user.setFullName("Mr mean");
+        user.setRegisterDate(new Date().getTime());
+        userMapperRepository.insert(user);
+
+        User retrievedUser = userMapperRepository.getUser(email);
+
+        Assert.assertEquals(user.getFullName(),retrievedUser.getFullName());
+    }
+
 
 }

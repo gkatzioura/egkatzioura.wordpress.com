@@ -33,4 +33,11 @@ public class UserMapperRepository {
         dynamoDBMapper.batchDelete(users);
     }
 
+    public User getUser(String email) {
+
+        User user = dynamoDBMapper.load(User.class,email);
+
+        return user;
+    }
+
 }
