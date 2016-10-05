@@ -40,9 +40,9 @@ public class CustomerUserDetailsService implements UserDetailsService {
             MongoUserDetails mongoUserDetails = new MongoUserDetails(email,password,authorities.toArray(new String[authorities.size()]));
 
             return mongoUserDetails;
+        } else {
+            throw new UsernameNotFoundException("username not found");
         }
-
-        return null;
     }
 
 }
