@@ -26,6 +26,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework:spring-jdbc")
     compile("com.h2database:h2:1.4.192")
+    compile("org.mongodb:mongo-java-driver:3.3.0")
     compile("org.slf4j:slf4j-api:1.6.6")
     compile("ch.qos.logback:logback-core:1.1.7")
     compile("ch.qos.logback:logback-classic:1.1.7")
@@ -33,5 +34,5 @@ dependencies {
 }
 
 bootRun {
-    systemProperty "spring.profiles.active", "customquery"
+    systemProperty "spring.profiles.active", "encodedjdbcpassword"
 }

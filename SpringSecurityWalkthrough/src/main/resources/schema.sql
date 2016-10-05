@@ -11,6 +11,12 @@ drop table if exists Custom_Users;
 create table Custom_Users(id bigint auto_increment, username varchar(255), password varchar(255));
 insert into Custom_Users(username,password) values('TestUser','TestPass');
 
+drop table if exists Custom_Users_Encoded_pass;
+create table Custom_Users_Encoded_pass(id bigint auto_increment, username varchar(255), password varchar(255));
+-- real password is test_pass
+insert into Custom_Users_Encoded_pass(username,password) values('TestUser','4ac1b63dca561d274c6055ebf3ed97db');
+
 drop table if exists Custom_Roles;
 create table Custom_Roles(username varchar(255),authority  varchar(255), UNIQUE(username,authority));
 insert into Custom_Roles(username,authority) values('TestUser','superadmin');
+

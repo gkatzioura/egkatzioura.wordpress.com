@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spring-security.iml" filepath="$PROJECT_DIR$/.idea/modules/spring-security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spring-security_main.iml" filepath="$PROJECT_DIR$/.idea/modules/spring-security_main.iml" group="spring-security" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spring-security_test.iml" filepath="$PROJECT_DIR$/.idea/modules/spring-security_test.iml" group="spring-security" />
+    </modules>
+  </component>
+</project>

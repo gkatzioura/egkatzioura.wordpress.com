@@ -15,7 +15,7 @@ import java.nio.file.Files;
 public class DataSourceConfig {
 
     @Bean
-    @Profile(value = {"simple","customquery"})
+    @Profile(value = {"simple","customquery","encodedjdbcpassword"})
     public DataSource createDataSource() {
 
         JdbcDataSource dataSource = new JdbcDataSource();
