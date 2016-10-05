@@ -34,5 +34,5 @@ dependencies {
 }
 
 bootRun {
-    systemProperty "spring.profiles.active", "encodedjdbcpassword"
+    systemProperty "spring.profiles.active", "encodedcustompassword"
 }

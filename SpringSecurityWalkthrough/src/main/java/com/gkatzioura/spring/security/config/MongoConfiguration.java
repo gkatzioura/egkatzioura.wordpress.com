@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Profile;
  * Created by gkatzioura on 9/27/16.
  */
 @Configuration
-@Profile("customuserdetails")
+@Profile({"customuserdetails","encodedcustompassword"})
 public class MongoConfiguration {
 
     @Bean

@@ -1,5 +1,6 @@
 package com.gkatzioura.spring.security;
 
+import com.gkatzioura.spring.security.encoder.CustomPasswordEncoder;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,15 @@ public class EncoderTest {
         String encoded = standardPasswordEncoder.encode("test_pass");
 
         LOGGER.info("Standard encoded "+encoded);
+    }
+
+    @Test
+    public void customEncoder() {
+
+        CustomPasswordEncoder customPasswordEncoder = new CustomPasswordEncoder();
+        String encoded = customPasswordEncoder.encode("custom_pass");
+
+        LOGGER.info("Custom encoded "+encoded);
     }
 
 }
