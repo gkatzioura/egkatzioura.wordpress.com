@@ -27,9 +27,12 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-cache")
     compile("org.springframework.boot:spring-boot-starter")
+    compile("com.hazelcast:hazelcast:3.7.4")
+    compile("com.hazelcast:hazelcast-spring:3.7.4")
+
     testCompile("junit:junit")
 }
 
 bootRun {
-    systemProperty "spring.profiles.active", "simple-cache"
+    systemProperty "spring.profiles.active", "hazelcast-cache"
 }

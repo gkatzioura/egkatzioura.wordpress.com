@@ -19,7 +19,7 @@ import java.util.List;
  * Created by gkatzioura on 1/5/17.
  */
 @Configuration
-@Profile("simple-cache")
+@Profile({"simple-cache","hazelcast-cache"})
 public class SimpleDataConfig {
 
     @Autowired

@@ -1,9 +1,11 @@
 package com.gkatzioura.caching.model;
 
+import java.io.Serializable;
+
 /**
  * Created by gkatzioura on 1/5/17.
  */
-public class UserPayload {
+public class UserPayload implements Serializable {
 
     private String userName;
     private String firstName;
