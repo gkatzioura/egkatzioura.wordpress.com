@@ -1,0 +1,32 @@
+group 'com.gkatzioura'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    compile group: 'org.postgresql', name:'postgresql', version:'9.4-1206-jdbc42'
+    compile group: 'org.springframework', name: 'spring-jdbc'
+    compile group: 'com.zaxxer', name: 'HikariCP', version: '2.6.0'
+    compile group: 'com.hazelcast', name: 'hazelcast-hibernate5', version: '1.2'
+    compile group: 'com.hazelcast', name: 'hazelcast', version: '3.7.5'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+

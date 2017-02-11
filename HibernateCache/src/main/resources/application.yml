@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    continue-on-error: true
+  jpa:
+    properties:
+      hibernate:
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: com.hazelcast.hibernate.HazelcastCacheRegionFactory
+    show-sql: true
