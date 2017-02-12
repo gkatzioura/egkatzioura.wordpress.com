@@ -1,6 +1,13 @@
 spring:
   datasource:
     continue-on-error: true
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://172.17.0.2:5432/postgres
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    hikari:
+      idle-timeout: 10000
   jpa:
     properties:
       hibernate:
