@@ -7,6 +7,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "employee", schema="spring_data_jpa_example")
+@NamedQuery(name = "Employee.fetchByLastNameLength",
+        query = "SELECT e FROM Employee e WHERE CHAR_LENGTH(e.lastname) =:length "
+)
 public class Employee {
 
     @Id
