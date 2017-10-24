@@ -42,7 +42,7 @@ public class HelloController {
     }
 
     @RequestMapping(value = "/employee",method = RequestMethod.POST)
-    private void add(Employee employee) {
+    public void add(Employee employee) {
 
         employeeRepository.save(employee);
     }
