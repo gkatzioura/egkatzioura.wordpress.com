@@ -1,6 +1,6 @@
 package com.gkatzioura;
 
-import com.gkatzioura.service.CheckAsyncService;
+import com.gkatzioura.service.AsynchronousService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,16 +13,11 @@ import org.springframework.stereotype.Component;
 public class Scheduler {
 
     @Autowired
-    private CheckAsyncService checkAsyncService;
+    private AsynchronousService checkAsyncService;
 
     @Scheduled(fixedDelay = 10000)
     public void checkTheScedule() {
-        fetchEm();
-    }
-
-    @Async
-    public void fetchEm() {
-        checkAsyncService.checkAQuery();
+        checkAsyncService.executeAsynchronously();
     }
 
 }

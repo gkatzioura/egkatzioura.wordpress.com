@@ -2,6 +2,7 @@ package com.gkatzioura.controller;
 
 import com.gkatzioura.persistence.Employee;
 import com.gkatzioura.persistence.EmployeeRepository;
+import com.gkatzioura.service.AsynchronousService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +23,28 @@ public class HelloController {
     @Autowired
     EmployeeRepository employeeRepository;
 
+    @Autowired
+    private AsynchronousService anAsynchronousService;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(HelloController.class);
 
     @RequestMapping("/")
     public String checkIt() {
 
-        checkMe();
+        //checkMe();
 
         return "whatever";
     }
 
+    @RequestMapping("/executeFunction")
+    public String executeAsync() {
+
+        anAsynchronousService.executeAsynchronously();
+
+        return "OK";
+    }
+
+    /*
     @Async
     private void checkMe() {
 
@@ -46,5 +59,6 @@ public class HelloController {
 
             employeeRepository.findAll().forEach(o->LOGGER.info(o.getEmail()));
     }
+    */
 
 }
