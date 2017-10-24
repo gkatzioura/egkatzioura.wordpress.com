@@ -6,13 +6,10 @@ import com.gkatzioura.service.AsynchronousService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by gkatzioura on 4/26/17.
@@ -28,15 +25,8 @@ public class HelloController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HelloController.class);
 
-    @RequestMapping("/")
-    public String checkIt() {
 
-        //checkMe();
-
-        return "whatever";
-    }
-
-    @RequestMapping("/executeFunction")
+    @RequestMapping("/runTask")
     public String executeAsync() {
 
         anAsynchronousService.executeAsynchronously();
@@ -44,21 +34,11 @@ public class HelloController {
         return "OK";
     }
 
-    /*
-    @Async
-    private void checkMe() {
+    @RequestMapping("/employess")
+    public List<Employee> employees() throws Exception {
 
-        LOGGER.info("Check it");
-
-        Employee employee = new Employee();
-        employee.setEmail("gka@gks.com");
-        employee.setFirstName("lala");
-        employee.setLastname("Noke");
-
-        employeeRepository.save(employee);
-
-            employeeRepository.findAll().forEach(o->LOGGER.info(o.getEmail()));
+        return anAsynchronousService.fetchEmployess().get();
     }
-    */
+
 
 }
