@@ -33,7 +33,7 @@ public class SpringCamelApplicationTests {
     @Before
 	public void setup() throws Exception {
 
-	    camelContext.getRouteDefinition(TimerRoute.ROUTE_NAME)
+        camelContext.getRouteDefinition(TimerRoute.ROUTE_NAME)
                 .autoStartup(true)
                 .adviceWith(camelContext, new AdviceWithRouteBuilder() {
                     @Override
@@ -41,7 +41,6 @@ public class SpringCamelApplicationTests {
                         replaceFromWith(MOCK_TIMER);
                         interceptSendToEndpoint("log*")
                                 .skipSendToOriginalEndpoint()
-                                .setBody(simple("testMessage"))
                                 .to(MOCK_RESULT);
                     }
                 });
@@ -51,7 +50,7 @@ public class SpringCamelApplicationTests {
 	public void contextLoads() throws Exception {
 
         resultEndpoint.expectedMessageCount(1);
-        producer.sendBody("lal");
+        producer.sendBody("A message");
         resultEndpoint.assertIsSatisfied();
     }
 
