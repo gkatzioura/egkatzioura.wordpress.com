@@ -1,2 +1,6 @@
 rootProject.name = 'com.gkatzioura'
+include 'specification'
+include 'core'
+include 'implementation-a'
+include 'implementation-b'
 
