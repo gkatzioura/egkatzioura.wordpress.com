@@ -1,0 +1,58 @@
+version: '3.5'
+
+services:
+  write-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: db-user
+      POSTGRES_PASSWORD: your-password
+      POSTGRES_DB: postgres
+    networks:
+      - postgresql-network
+    ports:
+      - "127.0.0.2:5432:5432"
+    volumes:
+      - $PWD/init-db-script.sh:/docker-entrypoint-initdb.d/init-db-script.sh
+  read-db-1:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: db-user
+      POSTGRES_PASSWORD: your-password
+      POSTGRES_DB: postgres
+    networks:
+      - postgresql-network
+    ports:
+      - "127.0.0.3:5432:5432"
+    volumes:
+      - $PWD/init-db-script.sh:/docker-entrypoint-initdb.d/init-db-script.sh
+  read-db-2:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: db-user
+      POSTGRES_PASSWORD: your-password
+      POSTGRES_DB: postgres
+    networks:
+      - postgresql-network
+    ports:
+      - "127.0.0.4:5432:5432"
+    volumes:
+      - $PWD/init-db-script.sh:/docker-entrypoint-initdb.d/init-db-script.sh
+  read-db-3:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: db-user
+      POSTGRES_PASSWORD: your-password
+      POSTGRES_DB: postgres
+    networks:
+      - postgresql-network
+    ports:
+      - "127.0.0.5:5432:5432"
+    volumes:
+      - $PWD/init-db-script.sh:/docker-entrypoint-initdb.d/init-db-script.sh
+networks:
+  postgresql-network:
+    name: postgresql-network
