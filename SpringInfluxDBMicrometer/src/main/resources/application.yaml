@@ -1,0 +1,10 @@
+management:
+  metrics:
+    export:
+      influx:
+        enabled: true
+        db: devjobsapi
+        uri: http://127.0.0.1:8086
+  endpoints:
+    web:
+      expose: "*"
