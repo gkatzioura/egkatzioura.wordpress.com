@@ -1,0 +1,13 @@
+version: '3.5'
+
+services:
+  influxdb:
+    image: influxdb
+    restart: always
+    ports:
+      - 8086:8086
+  gradana:
+    image: grafana/grafana
+    restart: always
+    ports:
+      - 3000:3000
