@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class EmployeeContoller {
+public class EmployeeController {
 
 	private final EmployeeRepository employeeRepository;
 
-	public EmployeeContoller(EmployeeRepository employeeRepository) {
+	public EmployeeController(EmployeeRepository employeeRepository) {
 		this.employeeRepository = employeeRepository;
 	}
 

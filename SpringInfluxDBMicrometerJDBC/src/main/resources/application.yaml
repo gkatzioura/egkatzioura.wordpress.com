@@ -10,7 +10,7 @@ management:
     export:
       influx:
         enabled: true
-        db: devjobsapi
+        db: employeeapi
         uri: http://127.0.0.1:8086
   endpoints:
     web:

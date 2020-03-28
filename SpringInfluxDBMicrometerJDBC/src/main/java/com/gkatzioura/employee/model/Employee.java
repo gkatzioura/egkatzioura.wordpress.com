@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "employee", catalog="spring_data_jpa_example")
+@Table(name = "employee", schema="spring_data_jpa_example")
 public class Employee {
 
 	@Id
@@ -33,9 +33,5 @@ public class Employee {
 
 	@Column(name = "salary")
 	private Integer salary;
-
-	public Long getId() {
-		return id;
-	}
 
 }

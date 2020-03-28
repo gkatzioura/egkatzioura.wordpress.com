@@ -11,7 +11,7 @@ services:
     restart: always
     ports:
       - 3000:3000
-  write-db:
+  postgres:
     image: postgres
     restart: always
     environment:
@@ -19,6 +19,6 @@ services:
       POSTGRES_PASSWORD: your-password
       POSTGRES_DB: postgres
     ports:
-      - "127.0.0.1:5432:5432"
+      - 5432:5432
     volumes:
       - $PWD/init-db-script.sh:/docker-entrypoint-initdb.d/init-db-script.sh
