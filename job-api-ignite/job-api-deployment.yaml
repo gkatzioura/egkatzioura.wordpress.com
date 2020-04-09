@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: job-api-deployment
+  labels:
+    app: job-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: job-api
+  template:
+    metadata:
+      labels:
+        app: job-api
+    spec:
+      containers:
+        - name: job-api
+          image: job-api:1.0
+          env:
+            - name: IGNITE_QUIET
+              value: "false"
+            - name: IGNITE_CACHE_CLIENT
+              value: "false"
+          ports:
+            - containerPort: 11211
+              protocol: TCP
+            - containerPort: 47100
+              protocol: TCP
+            - containerPort: 47500
+              protocol: TCP
+            - containerPort: 49112
+              protocol: TCP
+            - containerPort: 10800
+              protocol: TCP
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 10900
+              protocol: TCP
+      serviceAccount: job-cache
+      serviceAccountName: job-cache

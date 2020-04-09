@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: job-cache
+  name: job-cache
+spec:
+  ports:
+    - name: jdbc
+      port: 11211
+      protocol: TCP
+      targetPort: 11211
+    - name: spi-communication
+      port: 47100
+      protocol: TCP
+      targetPort: 47100
+    - name: spi-discovery
+      port: 47500
+      protocol: TCP
+      targetPort: 47500
+    - name: jmx
+      port: 49112
+      protocol: TCP
+      targetPort: 49112
+    - name: sql
+      port: 10800
+      protocol: TCP
+      targetPort: 10800
+    - name: rest
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: thin-clients
+      port: 10900
+      protocol: TCP
+      targetPort: 10900
+  selector:
+    app: job-api
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: job-api
+  name: job-api
+spec:
+  ports:
+    - name: rest-api
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: job-api
+  type: ClusterIP

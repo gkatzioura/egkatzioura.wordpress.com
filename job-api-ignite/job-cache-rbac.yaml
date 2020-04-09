@@ -1,0 +1,33 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: job-cache
+rules:
+  - apiGroups:
+    - ""
+    resources:
+    - pods
+    - endpoints
+    verbs:
+    - get
+    - list
+    - watch
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: job-cache
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: 2020-03-07T22:23:50Z
+  name: job-cache
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: job-cache
+subjects:
+  - kind: ServiceAccount
+    name: job-cache
+    namespace: "default"
