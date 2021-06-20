@@ -19,7 +19,7 @@
     "grunt-sails-linker": "~0.10.1",
     "grunt-sync": "0.2.4",
     "include-all": "~0.1.6",
-    "mongodb": "^1.4.40",
+    "mongodb": "^3.6.1",
     "node-schedule": "^1.1.1",
     "rc": "1.0.1",
     "sails": "~0.12.3",
