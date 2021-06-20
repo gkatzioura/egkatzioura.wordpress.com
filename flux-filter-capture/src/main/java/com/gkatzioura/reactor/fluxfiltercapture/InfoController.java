@@ -9,11 +9,10 @@ import reactor.core.publisher.Mono;
 @RestController
 public class InfoController {
 
-    public static final String APPLICATION_DESCRIPTION = "Application Description";
 
     @PostMapping("/info")
-    public Mono<Info> getInfo(@RequestBody Info info) {
-        return Mono.just(info);
+    public Mono<InfoResponse> getInfo(@RequestBody Info info) {
+        return Mono.just(InfoResponse.builder().success(true).build());
     }
 
 }
