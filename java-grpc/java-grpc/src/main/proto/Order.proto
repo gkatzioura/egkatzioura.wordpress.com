@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.egkatzioura.order.v1";
+
+service OrderService {
+    rpc ExecuteOrder(OrderRequest) returns (OrderResponse) {};
+}
+
+message OrderRequest {
+    string email = 1;
+    string product = 2;
+    int32 amount = 3;
+}
+
+message OrderResponse {
+    string info = 1;
+}
