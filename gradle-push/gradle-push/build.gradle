@@ -1,0 +1,75 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId 'org.example'
+            artifactId 'gradle-push'
+            version version
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = 'gradle-push'
+                description = 'Gradle Push to Nexus'
+                url = 'https://github.com/gkatzioura/egkatzioura.wordpress.com.git'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'John'
+                        name = 'John Doe'
+                        email = 'an-email@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/gkatzioura/egkatzioura.wordpress.com.git'
+                    developerConnection = 'scm:git:https://github.com/gkatzioura/egkatzioura.wordpress.com.git'
+                    url = 'https://github.com/gkatzioura/egkatzioura.wordpress.com.git'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            def releasesRepoUrl = "http://localhost:8081/repository/maven-releases/"
+            def snapshotsRepoUrl = "http://localhost:8081/repository/maven-snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            credentials {
+                username "admin"
+                password "a-test-password"
+            }
+        }
+    }
+}
